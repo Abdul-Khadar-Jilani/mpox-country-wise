@@ -11,6 +11,30 @@ data = pd.read_excel('Data.xlsx')
 st.write("### Total Monkeypox Cases by Country")
 st.write(data)
 
+import streamlit as st
+import json
+from pyecharts import options as opts
+from pyecharts.charts import Map
+from pyecharts.globals import ChartType, SymbolType
+
+# Load your data
+# Assuming you have a dataframe `data` with 'Countries' and 'Cases' columns
+
+# Initialize the Map
+c = Map(init_opts=opts.InitOpts(bg_color="white"))
+c.add("Monkeypox Cases", [list(z) for z in zip(data['Countries'], data['Cases'])], "world")
+c.set_series_opts(label_opts=opts.LabelOpts(is_show=False))
+c.set_global_opts(
+    title_opts=opts.TitleOpts(title="Monkeypox Cases by Country"),
+    visualmap_opts=opts.VisualMapOpts(max_=data['Cases'].max()),
+)
+
+# Render the map to HTML
+map_html = c.render_embed()
+
+# Display in Streamlit using st.components.v1.html
+st.components.v1.html(map_html, height=500)
+
 # Filters for Countries (Main Page)
 st.header('Filter Data')
 countries = st.multiselect('Select Countries', options=data['Countries'].unique(), default=data['Countries'].unique())
@@ -56,26 +80,4 @@ elif chart_type == 'Heatmap':
     st.pyplot(fig)
 
 
-import streamlit as st
-import json
-from pyecharts import options as opts
-from pyecharts.charts import Map
-from pyecharts.globals import ChartType, SymbolType
 
-# Load your data
-# Assuming you have a dataframe `data` with 'Countries' and 'Cases' columns
-
-# Initialize the Map
-c = Map(init_opts=opts.InitOpts(bg_color="white"))
-c.add("Monkeypox Cases", [list(z) for z in zip(data['Countries'], data['Cases'])], "world")
-c.set_series_opts(label_opts=opts.LabelOpts(is_show=False))
-c.set_global_opts(
-    title_opts=opts.TitleOpts(title="Monkeypox Cases by Country"),
-    visualmap_opts=opts.VisualMapOpts(max_=data['Cases'].max()),
-)
-
-# Render the map to HTML
-map_html = c.render_embed()
-
-# Display in Streamlit using st.components.v1.html
-st.components.v1.html(map_html, height=500)

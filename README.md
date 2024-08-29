@@ -2,6 +2,8 @@
 
 This project visualizes country-wise confirmed cases of Monkeypox using Streamlit and pyecharts.
 
+![image](https://github.com/user-attachments/assets/e0683b53-df72-40cc-b119-0929d3604fb6)
+
 ## Features
 
 - **Interactive Data Visualization**: Displays total Monkeypox cases by country.

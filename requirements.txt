@@ -3,3 +3,4 @@ pandas
 pyecharts
 matplotlib
 seaborn
+openpyxl
